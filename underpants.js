@@ -3,12 +3,19 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 'use strict';
 
+//  Functional Library 
+
 var _ = {};
 
 
 /**
 * START OF OUR LIBRARY!
 * Implement each function below its instructions
+ TABI: Create methods from the instructions below. Do this like so:
+
+ _.identity = function(){
+
+ }
 */
 
 /** _.identity
@@ -21,6 +28,10 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
+_.identity = function(valA){
+
+    return valA;
+}
 
 /** _.typeOf
 * Arguments:
@@ -42,6 +53,16 @@ var _ = {};
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf  = function(val){
+
+    if(Array.isArray(val)){
+        return "array";
+    } else if(val === null){
+        return "null";
+    }else{
+    return typeof val;
+    }
+}
 
 /** _.first
 * Arguments:
@@ -61,6 +82,22 @@ var _ = {};
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 
+_.first = function(arr, num){
+    if(!Array.isArray(arr)){
+        return [];
+    }   
+    // made these separate logic chains because they targeted dif variables
+    if (typeof num !== "number"){
+        return arr[0];
+    } else if (num < 0){
+        return [];
+    } else {
+        // The instruction here is to return numerous items from the array, how?
+        // Ahh okay, this is cool to know! You don't need to loop to return multiple
+        // values! Ofc ofc.
+        return arr.slice(0, num);
+    }
+}
 
 /** _.last
 * Arguments:
@@ -80,6 +117,25 @@ var _ = {};
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function(arr, num){
+    if(!Array.isArray(arr)){
+        return [];
+    }   
+
+    if (typeof num !== "number"){
+        return arr[arr.length - 1];
+    } else if (num < 0){
+        return [];
+    } else if (num > arr.length){
+        return arr;
+    } 
+    else {
+        // The instruction here is to return numerous items from the array, how?
+        // Ahh okay, this is cool to know! You don't need to loop to return multiple
+        // values! Ofc ofc.
+        return arr.slice(num, arr.length - 1);
+    }
+}
 
 /** _.indexOf
 * Arguments:
@@ -154,10 +210,21 @@ var _ = {};
 *   1) What if <function> returns something other than true or false?
 * Examples:
 *   _.filter([1,2,3,4,5], function(x){return x%2 === 0}) -> [2,4]
-* Extra Credit:
+* 
+!!!!Extra Credit:
 *   use _.each in your implementation
 */
 
+_.filter = function(arr, func){
+    let newArray = [];
+
+    for (let i = 0; i < arr.length; i++){
+        if (func(arr[i], i, arr)){
+            newArray.push(arr[i]);
+        }
+    }
+    return newArray;
+}
 
 /** _.reject
 * Arguments:
@@ -208,7 +275,22 @@ var _ = {};
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+_.map = function(collection, func){
+    const output = [];
 
+    if(Array.isArray(collection)){
+        for (let i = 0; i < collection.length; i++){
+            // DOES ANY FUNC ON THE INDEXED VAL IN ANY COLLECTION
+            output.push(func(collectio[i], i, collection));
+        }
+    } else {
+        for (let key in collection){
+        // TBD NEEDS COMPLETEION 
+        }
+    }
+
+    return output;
+}
 
 /** _.pluck
 * Arguments:
