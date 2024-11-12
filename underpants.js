@@ -33,6 +33,7 @@ _.identity = function(valA){
     return valA;
 }
 
+
 /** _.typeOf
 * Arguments:
 *   1) Any value
@@ -133,7 +134,10 @@ _.last = function(arr, num){
         // The instruction here is to return numerous items from the array, how?
         // Ahh okay, this is cool to know! You don't need to loop to return multiple
         // values! Ofc ofc.
-        return arr.slice(num, arr.length - 1);
+        // console.log(arr.slice(num -1, arr.length));
+        return arr.slice(num -1, arr.length)
+        // This got awkward because it's asking for the last X number of items from 
+        // the array, not array index, hence num -1
     }
 }
 
@@ -152,7 +156,14 @@ _.last = function(arr, num){
 *   _.indexOf(["a","b","c"], "c") -> 2
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
-
+_.indexOf = function(arr, val){
+    for (let i = 0; i < arr.length; i++){
+        if (arr[i] === val){
+            return i;
+        } 
+    }
+    return -1;
+}
 
 /** _.contains
 * Arguments:
@@ -168,7 +179,24 @@ _.last = function(arr, num){
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+_.contains = function(arr, val){
+    // declare a bool we'll work with later
+    let flag;
 
+    // loop array
+    for (let i = 0; i < arr.length; i++){
+        // using ternary operator set the flag true or false, depending
+        arr[i] === val ? flag = true : flag = false;
+        // if we find a match, we can exit the loop immediately
+        if (flag){
+            return true;
+        }
+    }
+    // otherwise we complete the entire loop, and if falsey return false. 
+    if (!flag){
+        return false;
+    }
+}
 
 /** _.each
 * Arguments:
@@ -185,7 +213,19 @@ _.last = function(arr, num){
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
-
+_.each = function(collection, func){
+    // reused previously created typeOf (vs typeof) from function library above
+    if(this.typeOf(collection) === "array"){
+        for (let i = 0; i < collection.length; i++){
+            func(collection[i], i, collection);
+        }
+    } else if (this.typeOf(collection) === "object"){
+        for (let key in collection){
+            // not sold this is the right way to access keys and values but is passing, so...?
+            func(collection[key], key, collection)
+        }
+    }
+}
 
 /** _.unique
 * Arguments:
@@ -195,8 +235,27 @@ _.last = function(arr, num){
 *   2) Use _.indexOf() from above
 * Examples:
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
+#############################################################
+_.indexOf = function(arr, val){
+    for (let i = 0; i < arr.length; i++){
+        if (arr[i] === val){
+            return i;
+        } 
+    }
+    return -1;
+}
+############################################################
+I: an array in the argument, and a call of the prev index func
+O: a new array
 */
+_.unique = function(arr){
+    let outputArray = []
+console.log (arr);
 
+    this.indexOf(arr)
+
+    return outputArray
+}
 
 /** _.filter
 * Arguments:
@@ -323,6 +382,17 @@ _.map = function(collection, func){
 * Examples:
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
+ADDITIONAL EXAMPLES:
+// _.every([1, 2, 3, 4], function(n){ return n % 2 === 0}); // false (because not every time is even)
+// _.every([2, 4, 6], function(n){ return n % 2 === 0}); // true (every item is even)
+// _.every({ a: 1, b: 2 }, function(n){ return n > 1});// false (not every item is greater than 1)
+// _.every({ a: 3, b: 4 }, function(n){ return n > 1}); /// true (every item is greater than 1)
+
+
+// _.every([1, 2, 3]); // true (because every item is truthy)
+// _.every([1, undefined, 3]); // false (because one item is falsey)
+// _.every({ a: 1, b: 2 }); // true (because all of the values are truthy)
+// _.every({ a: null, b: 2}); // false (because of the values if falsey)
 */
 
 
@@ -349,7 +419,8 @@ _.map = function(collection, func){
 
 
 /** _.reduce
-* Arguments:
+* WE WILL TALK ABOUT THIS IN CLASS
+Arguments:
 *   1) An array
 *   2) A function
 *   3) A seed
