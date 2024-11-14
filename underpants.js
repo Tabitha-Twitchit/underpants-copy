@@ -246,13 +246,38 @@ _.indexOf = function(arr, val){
 }
 ############################################################
 I: an array in the argument, and a call of the prev index func
-O: a new array
+O: a new array minus the duplicates.
+C: use the prev index function
 */
+// APPROACH 1
+// push all elements off into the new array so you have something to compare to
+
+// loop the array
+
+    // loop the new array within the other loop
+    // compare each indexed element
+    
+    //  if they match delete them from the new array 
+
+// APPROACH 2:
+// indexOf returns an index, which would tell you WHAT INDEX to delete
+// Say, using a splice method...
+// 
+// But we first need to know what values to feed it, so we have to 
+// first find those values that need to be deleted that match
+
 _.unique = function(arr){
     let outputArray = []
-console.log (arr);
 
-    this.indexOf(arr)
+    for (let i = 0; i < arr.length; i++){
+        // I'm iffy on this part for a couple reasons, calling indexOf 
+        // properly and how to handle / use the return.  
+        // 
+        // indexOf doesn't provide a push, we have to use the return 
+        // somehow to trigger the push logic, by, say checking the return...
+        _.indexOf(outputArray, arr[i]);
+        console.log("Still going?");
+    }
 
     return outputArray
 }
