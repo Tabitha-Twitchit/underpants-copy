@@ -461,7 +461,39 @@ Arguments:
 *   1) What if <seed> is not given?
 * Examples:
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
+
+// Reduce has an additional argument always passed in that includes a "seed value"
+// NOTES: Invokes a callback function to...return a single result.
+
+// the strength of reduce is that unlike map and filter which return arrays, it can return anything. A string, num array etc
+
+
 */
+
+_.reduce = function(array, func, seed){
+    //creeate output 
+    let output;
+    // check if seed value is provided
+    if(seed === undefined){
+        output = array[0];
+        for (let i = 1; i < array.length; i++){
+            // reassigning output to the RESULT of invoking the callback function
+            output = func(output, array[i], i);
+        }
+    } else {
+        output = seed;
+        for (let i = 0; i < array.length; i++){
+            // reassigning output to the RESULT of invoking the callback function
+            // A very MAJOR point of understanding is that output and "accumulator" 
+            // in Alex's example are synonymous/passed, because in Alex's version it is what
+            // is RETURNED from the CALLBACK ergo the RESULT of running the function 
+            // AND assigning it the value of output.
+            output = func(output, array[i], i);
+        }
+    }
+
+    return output;
+};
 
 
 /** _.extend
@@ -477,6 +509,10 @@ Arguments:
 *   var data = {a:"one"};
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
+
+// NOTE EXTEND WILL USE THE REST SYNTAX OR ARGUMENTS OBJECT
+YOU NEED TO BE ABLE TO TAKE IN AN INDEFINITE NUMBER OF OBJECTS
+// THese then get trascribed to a new object / array.
 */
 
 //////////////////////////////////////////////////////////////////////
