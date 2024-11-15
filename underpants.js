@@ -236,14 +236,7 @@ _.each = function(collection, func){
 * Examples:
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 #############################################################
-_.indexOf = function(arr, val){
-    for (let i = 0; i < arr.length; i++){
-        if (arr[i] === val){
-            return i;
-        } 
-    }
-    return -1;
-}
+
 ############################################################
 I: an array in the argument, and a call of the prev index func
 O: a new array minus the duplicates.
@@ -268,18 +261,44 @@ C: use the prev index function
 
 _.unique = function(arr){
     let outputArray = []
+    let callbackOutput;
 
-    for (let i = 0; i < arr.length; i++){
-        // I'm iffy on this part for a couple reasons, calling indexOf 
-        // properly and how to handle / use the return.  
-        // 
+    for (let i = 0; i < arr.length; i++){ 
+        
         // indexOf doesn't provide a push, we have to use the return 
         // somehow to trigger the push logic, by, say checking the return...
-        _.indexOf(outputArray, arr[i]);
-        console.log("Still going?");
-    }
+        // we capture the return by assigning a var to the result of the func call
+        
+        // for each iteration of the array we run this function on the OUTPUT array
+        // looking for the CURRENT INPUT array element 
+        callbackOutput = _.indexOf(outputArray, arr[i]);
+            // If it does we return an index of where it appears in the input function...hrm
+            // if it doesn't we return -1
+            /*
+            _.indexOf = function(arr, val){
+                // loop the array
+                for (let i = 0; i < arr.length; i++){
+                    // if the indexed element value equals the argument value...
+                    if (arr[i] === val){
+                        // return the INDEX 
+                        return i;
+                    } 
+                }
+                // If you get thru and nothin matches return -1
+                return -1;
+            }
+            */
+        // because the callback returns the index if there IS a match, we check if 
+        // there isn't a match (i.e. if -1 was returned), and if so, push the elemenet
+        if(callbackOutput < 0){
+            outputArray.push(arr[i]);
+        //     outputArray.splice(callbackOutput, 1);
+        }
 
-    return outputArray
+    }
+// console.log("Callback Output = " + callbackOutput);
+// console.log("outputArray = " + outputArray);
+return outputArray;
 }
 
 /** _.filter
@@ -323,6 +342,16 @@ _.filter = function(arr, func){
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
 
+_.reject = function(array, func){
+    let outputArray = [];
+    
+    for (let i = 0; i < array.length; i++ ){
+        if (!func(array[i], i, array)){
+            outputArray.push(arr[i]);
+        };
+    }
+    return outputArray
+}
 
 /** _.partition
 * Arguments:
