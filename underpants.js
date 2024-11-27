@@ -636,7 +636,7 @@ _.reduce = function(array, func, seed){
         output = array[0];
         for (let i = 1; i < array.length; i++){
             // reassigning output to the RESULT of invoking the callback function
-            output = func(output, array[i], i);
+            output = func(output, array[i], i, array);
         }
     } else {
         output = seed;
@@ -646,7 +646,7 @@ _.reduce = function(array, func, seed){
             // in Alex's example are synonymous/passed, because in Alex's version it is what
             // is RETURNED from the CALLBACK ergo the RESULT of running the function 
             // AND assigning it the value of output.
-            output = func(output, array[i], i);
+            output = func(output, array[i], i, array);
         }
     }
 
